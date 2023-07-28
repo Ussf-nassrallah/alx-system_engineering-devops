@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
 # Bash script that stops 4-to_infinity_and_beyond process.
 
-kill "$(pgrep 4-to_infinity_and_beyond)"
+p_name="4-to_infinity_and_beyond"
+p_id=$(pgrep "$p_name")
+
+if [ -z "$p_id" ]
+then
+	echo "$p_name : process not found"
+	exit 1
+fi
+
+kill -9 "$p_id"
