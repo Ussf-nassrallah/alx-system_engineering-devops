@@ -1,0 +1,9 @@
+# Bash script that uses ssh to connect to your server
+# using the private key ~/.ssh/school with the user ubuntu
+
+# the server ip or hostname
+ip="18.234.253.165"
+
+# use ssh to connect to the server that has ip=8.8.8.8
+# use '-i' flag to specify the private key file
+ssh -i ~/.ssh/school ubuntu@$ip
