@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# connecting to the container
+
+service apache2 start
