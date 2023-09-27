@@ -2,20 +2,6 @@
 # script that install nginx into the system
 sudo apt-get -y update
 sudo apt-get -y install nginx
-
 echo -e "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
-
-sudo tee /etc/nginx/sites-available/redirect_me <<EOL
-server {
-    listen 80;
-    server_name ussef.tech;
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-}
-EOL
-
-sudo ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
+sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;}' /etc/nginx/sites-available/default
+sudo service nginx restart
