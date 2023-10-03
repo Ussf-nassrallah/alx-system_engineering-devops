@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Install and configure HAproxy on your lb-01 server
+
+# install haproxy
+sudo apt-get install -y haproxy
+
+# print "ENABLED=1" inside /etc/default/haproxy
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+
+cat <<EOT | sudo tee -a /etc/haproxy/haproxy.cfg
+frontend Randommall.tech
+    timeout client  30000
+    bind 0:80
+    default_backend Randommall.tech_backend
+
+backend Randommall.tech_backend
+    timeout connect  3000
+    timeout server  30000
+    balance roundrobin
+    server 228560-web-01 54.87.655.2:80 check
+    server 228560-web-02 54.89.121.20:80 check
+EOT
+
+# restart haproxy
+sudo service haproxy restart
