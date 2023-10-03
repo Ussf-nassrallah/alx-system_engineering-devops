@@ -3,23 +3,23 @@ exec { 'update':
   command  => 'sudo apt-get update',
   provider => shell,
 }
-->
+
 # step 2
-package { 'nginx':
-  ensure => installed,
+package {'nginx':
+  ensure => present,
 }
-->
+
 # step 3
-file_line { 'add_custom_header':
+file_line { 'header line':
   ensure => present,
   path   => '/etc/nginx/sites-available/default',
-  line   => "    add_header X-Served-By \${hostname};",
-  match  => '^\s+location / {',
+  line   => "    location / {
+    add_header X-Served-By ${hostname};",
+  match  => '^\tlocation / {',
 }
-->
+
 # step 4
-exec { 'restart_nginx_service':
+exec { 'restart the service':
   command  => 'sudo service nginx restart',
   provider => shell,
-  require  => Package['nginx'],
 }
