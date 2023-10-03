@@ -1,25 +1,32 @@
 #!/usr/bin/env bash
-# Install and configure HAproxy on your lb-01 server
+# script that install load balancer into your system
 
-# install haproxy
-sudo apt-get install -y haproxy
+# update pacheges
+sudo apt-get update
 
-# print "ENABLED=1" inside /etc/default/haproxy
-echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+# install and Configure haproxy
+sudo apt-get install haproxy -y
+sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOT
+global
+    daemon
+    maxconn 256
 
-cat <<EOT | sudo tee -a /etc/haproxy/haproxy.cfg
-frontend Randommall.tech
-    timeout client  30000
-    bind 0:80
-    default_backend Randommall.tech_backend
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
 
-backend Randommall.tech_backend
-    timeout connect  3000
-    timeout server  30000
+frontend http_front
+    bind *:80
+    default_backend http_back
+
+backend http_back
     balance roundrobin
-    server 228560-web-01 54.87.655.2:80 check
-    server 228560-web-02 54.89.121.20:80 check
+    server 386577-web-01 18.234.253.165:80 check
+    server 386577-web-02 100.25.196.203:80 check
 EOT
 
-# restart haproxy
-sudo service haproxy restart
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+sudo systemctl start haproxy
+sudo systemctl enable haproxy
