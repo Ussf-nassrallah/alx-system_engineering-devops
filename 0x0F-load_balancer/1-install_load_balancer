@@ -1,32 +1,15 @@
 #!/usr/bin/env bash
-# script that install load balancer into your system
+# install load balancer
 
-# update pacheges
-sudo apt-get update
+sudo apt-get -y update
+sudo apt-get -y upgrade
 
-# install and Configure haproxy
-sudo apt-get install haproxy -y
-sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<EOT
-global
-    daemon
-    maxconn 256
+sudo apt-get -y install haproxy
 
-defaults
-    mode http
-    timeout connect 5000ms
-    timeout client 50000ms
-    timeout server 50000ms
+sudo sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
 
-frontend http_front
-    bind *:80
-    default_backend http_back
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.original
 
-backend http_back
-    balance roundrobin
-    server 386577-web-01 18.234.253.165:80 check
-    server 386577-web-02 100.25.196.203:80 check
-EOT
+sudo sed -i "$ a\listen 386577-lb-01\n\tbind *:80\n\tmode http\n\tbalance roundrobin\n\toption httpclose\n\toption forwardfor\n\tserver 386577-web-02 100.25.196.203:80 check\n\tserver 386577-web-01 18.234.253.165:80 check" /etc/haproxy/haproxy.cfg
 
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
-sudo systemctl start haproxy
-sudo systemctl enable haproxy
+sudo service haproxy start
