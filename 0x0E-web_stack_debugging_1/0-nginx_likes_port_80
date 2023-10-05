@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# script that configures a server to the above requirements
+
+# remove default file from /etc/nginx/sites-enabled
+sudo rm /etc/nginx/sites-enabled/default
+
+# create a symbolic link at /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# restart nginx server
+sudo service nginx restart
