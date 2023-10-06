@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# script that will display information about subdomains
+
+sub_doms=("www" "lb-01" "web-01" "web-02")
+dom="$1"
+subdom="$2"
+
+dig_exec () {
+    subdom="$2"
+    information="$(dig "$subdom.$dom" | grep -A1 'ANSWER SECTION:' | awk 'NR==2')"
+    ip_address=$(echo "$information" | awk '{print $5}')
+    rec=$(echo "$information" | awk '{print $4}')
+    echo "The subdomain $subdom is a $rec record and points to $ip_address"
+}
+
+if [ $# -eq 1 ]
+then
+    for sub in "${sub_doms[@]}"
+    do
+        dig_exec "$dom" "$sub"
+    done
+elif [ $# -eq 2 ]
+then
+    dig_exec "$dom" "$subdom"
+fi
