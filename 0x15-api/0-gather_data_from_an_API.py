@@ -28,7 +28,7 @@ def get_user_data(user_id):
     ))
 
     for task in DONE_TASKS:
-        print(f"\t{task.get('title')}")
+        print(f"\t {task.get('title')}")
 
 
 if __name__ == "__main__":
