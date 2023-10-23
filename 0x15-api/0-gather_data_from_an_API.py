@@ -1,18 +1,14 @@
 #!/usr/bin/python3
-"""
-script that, using 'https://jsonplaceholder.typicode.com' REST API,
-for a given employee ID, returns information about his/her TODO list progress.
-"""
+"""script that, using 'https://jsonplaceholder.typicode.com' REST API"""
 
 import requests
 import sys
 
-url = "https://jsonplaceholder.typicode.com"
-user_id = sys.argv[1]
-
 
 def get_user_data(user_id):
     """ get user data from api """
+    url = "https://jsonplaceholder.typicode.com"
+    user_id = sys.argv[1]
     user = requests.get(f"{url}/users/{user_id}")
     user_todos = requests.get(f"{url}/users/{user_id}/todos")
 
