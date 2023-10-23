@@ -12,7 +12,6 @@ def export_user_data():
     """
     url = "https://jsonplaceholder.typicode.com"
     users = requests.get(f"{url}/users").json()
-    todos = requests.get(f"{url}/todos").json()
 
     filename = 'todo_all_employees.json'
 
@@ -21,7 +20,9 @@ def export_user_data():
             'task': todo.get('title'),
             'completed': todo.get('completed'),
             'username': user.get('name')
-        } for todo in todos] for user in users}, json_file)
+        } for todo in requests.get(
+            f"{url}/users/{user.get('id')}/todos").json()]
+            for user in users},json_file)
 
 
 if __name__ == "__main__":
