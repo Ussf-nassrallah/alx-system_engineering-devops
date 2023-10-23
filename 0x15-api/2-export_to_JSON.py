@@ -20,9 +20,9 @@ def export_user_data(user_id):
 
     with open(filename, "w") as json_file:
         json.dump({user_id: [{
-        'task': t.get('title'),
-        'completed': t.get('completed'),
-        'username': username
+            'task': t.get('title'),
+            'completed': t.get('completed'),
+            'username': username
         } for t in user_todos]}, json_file)
 
 
