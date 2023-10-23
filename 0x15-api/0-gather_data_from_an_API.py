@@ -8,7 +8,6 @@ import sys
 def get_user_data(user_id):
     """ get user data from api """
     url = "https://jsonplaceholder.typicode.com"
-    user_id = sys.argv[1]
     user = requests.get(f"{url}/users/{user_id}")
     user_todos = requests.get(f"{url}/users/{user_id}/todos")
 
@@ -33,4 +32,4 @@ def get_user_data(user_id):
 
 
 if __name__ == "__main__":
-    get_user_data(user_id)
+    get_user_data(sys.argv[1])
