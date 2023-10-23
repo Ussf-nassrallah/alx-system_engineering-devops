@@ -14,7 +14,7 @@ def export_user_data():
     users = requests.get(f"{url}/users").json()
     todos = requests.get(f"{url}/todos").json()
 
-    filename = 'todo_all_employees.json.json'
+    filename = 'todo_all_employees.json'
 
     with open(filename, "w") as json_file:
         json.dump({user.get('id'): [{
