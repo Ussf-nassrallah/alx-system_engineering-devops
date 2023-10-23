@@ -18,8 +18,8 @@ def export_user_data(user_id):
     username = user.get('username')
     filename = user_id + '.csv'
 
-    with open(filename, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+    with open(filename, 'w', newline='') as f:
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
         [writer.writerow(
             [
                 user_id,
