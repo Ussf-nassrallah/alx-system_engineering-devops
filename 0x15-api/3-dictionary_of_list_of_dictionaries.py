@@ -20,9 +20,7 @@ def export_user_data():
             'task': todo.get('title'),
             'completed': todo.get('completed'),
             'username': user.get('name')
-        } for todo in requests.get(
-            f"{url}/users/{user.get('id')}/todos").json()]
-            for user in users},json_file)
+        } for todo in requests.get(f"{url}/users/{user.get('id')}/todos").json()] for user in users}, json_file)
 
 
 if __name__ == "__main__":
