@@ -16,11 +16,13 @@ def export_user_data():
     filename = 'todo_all_employees.json'
 
     with open(filename, "w") as json_file:
-        json.dump({user.get('id'): [{
-            'task': todo.get('title'),
-            'completed': todo.get('completed'),
-            'username': user.get('name')
-        } for todo in requests.get(f"{url}/users/{user.get('id')}/todos").json()] for user in users}, json_file)
+        json.dump({u.get('id'): [{
+            'username': u.get('username'),
+            'task': t.get('title'),
+            'completed': t.get('completed')
+        }
+            for t in requests.get(f"{url}/users/{u.get('id')}/todos").json()]
+                for u in users}, json_file)
 
 
 if __name__ == "__main__":
