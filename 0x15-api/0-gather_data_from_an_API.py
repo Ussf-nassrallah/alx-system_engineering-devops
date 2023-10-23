@@ -12,6 +12,7 @@ user_id = sys.argv[1]
 
 
 def get_user_data(user_id):
+    """ get user data from api """
     user = requests.get(f"{url}/users/{user_id}")
     user_todos = requests.get(f"{url}/users/{user_id}/todos")
 
