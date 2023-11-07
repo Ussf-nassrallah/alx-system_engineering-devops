@@ -32,6 +32,6 @@ def recurse(subreddit, hot_list=[], count=0, after=""):
     for obj in output.get("children"):
         hot_list.append(obj.get("data").get("title"))
 
-    if af is not None:
+    if after is not None:
         return recurse(subreddit, hot_list, count, after)
     return hot_list
