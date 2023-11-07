@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" task-0 document"""
+""" task-0 document """
 import requests
 
 
