@@ -3,7 +3,7 @@
 import requests
 
 
-def recurse(subreddit, hot_list=[], counter=0, af=""):
+def recurse(subreddit, hot_list=[], count=0, after=""):
     """
     function that queries the Reddit API
       and returns a list containing the titles of
@@ -14,7 +14,7 @@ def recurse(subreddit, hot_list=[], counter=0, af=""):
     headers = {
         "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
     }
-    params = {"limit": 10, "count": counter, "after": af}
+    params = {"limit": 10, "count": count, "after": after}
 
     res = requests.get(
         apiUrl,
@@ -23,16 +23,15 @@ def recurse(subreddit, hot_list=[], counter=0, af=""):
         allow_redirects=False
     )
     if res.status_code == 404:
-        print('None')
         return
 
     output = res.json().get("data")
-    af = output.get("after")
-    counter += output.get("dist")
+    after = output.get("after")
+    count += output.get("dist")
 
     for obj in output.get("children"):
         hot_list.append(obj.get("data").get("title"))
 
     if af is not None:
-        return recurse(subreddit, hot_list, counter, af)
+        return recurse(subreddit, hot_list, count, after)
     return hot_list
