@@ -6,8 +6,8 @@ import requests
 def recurse(subreddit, hot_list=[], af="", counter=0):
     """
     function that queries the Reddit API
-      and returns a list containing the titles of
-      all hot articles for a given subreddit
+    and returns a list containing the titles of
+    all hot articles for a given subreddit
     """
     apiUrl = f"https://www.reddit.com/r/{subreddit}/hot/.json"
 
